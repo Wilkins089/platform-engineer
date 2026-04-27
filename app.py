@@ -1,20 +1,22 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from flask import Flask, jsonify
 import os
 
+app = Flask(__name__)
 
-class HelloHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/html; charset=utf-8')
-        self.end_headers()
-        self.wfile.write(b"<html><head><title>Hello Python App</title></head><body><h1>Hello Python App</h1></body></html>")
 
-    def log_message(self, format, *args):
-        return
+@app.get('/')
+def hello() -> str:
+    return 'Hello Python App'
+
+
+@app.get('/status')
+def status():
+    return jsonify({
+        "status": "ok",
+        "service": "hello-python-app"
+    }), 200
 
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', '8080'))
-    server = HTTPServer(('0.0.0.0', port), HelloHandler)
-    print(f'Serving on http://localhost:{port}')
-    server.serve_forever()
+    port = int(os.getenv('PORT', '3000'))
+    app.run(host='0.0.0.0', port=port)

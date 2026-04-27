@@ -1,17 +1,32 @@
 # hello-python-app
 
-A minimal Python web app that serves **Hello Python App** on **http://localhost:8080**.
+A minimal Python API built with **Flask** that serves `Hello Python App` on `http://localhost:3000`.
+
+## Project structure
+
+```text
+.
+├── app.py
+├── requirements.txt
+├── Dockerfile
+├── .gitignore
+├── .dockerignore
+└── README.md
+```
 
 ## Run locally
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate   # Linux/macOS
+pip install -r requirements.txt
 python app.py
 ```
 
 Open:
 
 ```bash
-http://localhost:8080
+http://localhost:3000
 ```
 
 ## Run with Docker
@@ -25,13 +40,13 @@ docker build -t hello-python-app .
 Run the container:
 
 ```bash
-docker run -p 8080:8080 hello-python-app
+docker run -p 3000:3000 hello-python-app
 ```
 
 Open:
 
 ```bash
-http://localhost:8080
+http://localhost:3000
 ```
 
 ## Push to GitHub
