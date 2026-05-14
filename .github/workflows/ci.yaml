@@ -21,5 +21,5 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: wortiz/python-app:${{ env.sha_short }}
+          tags: wortiz/python-app:${{ steps.vars.outputs.sha_short }}
 
