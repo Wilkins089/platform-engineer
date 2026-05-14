@@ -22,11 +22,25 @@ jobs:
         with:
           push: true
           tags: wortiz/python-app:${{ env.SHORT_SHA }}
+    outputs:
+      commit_id: ${{ env.SHORT_SHA }}
 
   cd:
     runs-on: self-hosted
     needs: [ci]
     steps:
+      - name: Modify tags
+        shell: bash
+        run: |
+          echo ${{needs.ci.outputs.commit_id}}
+          pip install yq
+          yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"' chart/python-app/values.yaml
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v10
+        with:
+          message: 'Update values.yaml with commit ${{needs.ci.outputs.commit_id}}'
+
       - name: Install Argocd
         shell: bash
         run: |
