@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: wortiz/python-app
   pullPolicy: IfNotPresent
-  tag: "02"
+  tag: 08f84337
 
 imagePullSecrets: []
 
