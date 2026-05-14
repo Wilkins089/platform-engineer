@@ -7,9 +7,9 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set outputs
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
       -
         name: Login to Docker Hub
         uses: docker/login-action@v4
@@ -21,5 +21,5 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           push: true
-          tags: wortiz/python-app:${{ steps.vars.outputs.sha_short }}
+          tags: wortiz/python-app:${{ env.SHORT_SHA }}
 
