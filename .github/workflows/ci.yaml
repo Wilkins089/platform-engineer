@@ -25,6 +25,7 @@ jobs:
 
   cd:
     runs-on: self-hosted
+    needs: [ci]
     steps:
       - name: Install Argocd
         shell: bash
@@ -33,9 +34,6 @@ jobs:
           chmod +x argocd
           mv ./argocd /user/local/bin/argocd
          
-    runs-on: self-hosted
-    needs: [ci]
-    steps:
       - name: Argocd Sync
         shell: bash
         run: | 
