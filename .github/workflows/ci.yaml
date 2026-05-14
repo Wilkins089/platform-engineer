@@ -29,12 +29,13 @@ jobs:
     runs-on: self-hosted
     needs: [ci]
     steps:
+      - uses: actions/checkout@v3
+
       - name: Modify tags
         shell: bash
         run: |
           echo ${{needs.ci.outputs.commit_id}}
-          pip install yq
-          yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"' chart/python-app/values.yaml
+          sed -i "s/IMAGE_TAG/${{ needs.ci.outputs.commit_id }}/g" chart/python-app/values.yaml
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v10
